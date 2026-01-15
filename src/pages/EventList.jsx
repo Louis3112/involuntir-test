@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { apiService } from '../services/api';
-import { CiWarning } from "react-icons/ci";
 import { MdEventBusy } from "react-icons/md";
+import { FaSearch, FaFilter } from 'react-icons/fa';
 import EventCard from '../components/EventCard';
+import LoadingAnimation from '../components/LoadingAnimation';
+import ErrorCard from '../components/ErrorCard';
 
 export default function EventList() {
   const [events, setEvents] = useState([]);
@@ -13,16 +15,12 @@ export default function EventList() {
     const fetchEvents = async () => {
       try{
         setLoading(true);
-        const data = await apiService.getEvents();
-        if (Array.isArray(data)) {
-          setEvents(data);
-        } else if (data && Array.isArray(data.data)) {
-          setEvents(data.data);
-        } else if (data && Array.isArray(data.events)) {
-          setEvents(data);
-        } else {
-          setEvents([]); 
-        }
+        const response = await apiService.getEvents();
+        if (Array.isArray(response)) {
+          setEvents(response);
+        } else if (response && Array.isArray(response.data)) {
+          setEvents(response.data);
+        } 
       } catch (e) {
         setError('Gagal memuat data event.');
         console.error(e);
@@ -35,28 +33,14 @@ export default function EventList() {
     fetchEvents();
   }, []);
 
-  if (loading) return (
-    <div className="min-h-screen flex justify-center items-center">
-        <div className="animate-spin rounded-full h-24 w-24 border-t-4 border-sky-600"></div>
-    </div>
-  );
-  
+  if (loading) {
+    return (
+      <LoadingAnimation/>
+    );
+  }
   if(error) {
     return (
-        <div className="min-h-screen flex justify-center items-center">
-          <div className="bg-red-50 text-red-600 p-6 rounded-xl border border-red-100 max-w-md flex flex-col items-center text-center">
-            <CiWarning className="text-5xl mb-2"/>
-            <h3 className="font-bold text-lg mb-1">Terjadi Kesalahan</h3>
-            <p>{error}</p>
-      
-            <button 
-              onClick={() => window.location.reload()} 
-              className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
-            >
-              Coba Refresh
-            </button>
-          </div>
-        </div>
+      <ErrorCard error={error} />
     );
   }
   

@@ -13,7 +13,7 @@ export const apiService = {
     return response.data;
   },
 
-  getDetailEvent: async (id) => {
+  getEventDetail: async (id) => {
     const response = await apiClient.get(`/api/events/${id}/detail`);
     return response.data;
   }

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { FaCalendar } from 'react-icons/fa';
 
 export default function EventCard({ event }) {
   const formatDate = (dateString) => {
@@ -13,7 +14,7 @@ export default function EventCard({ event }) {
           {event.event_name}
         </h3>
         <p className="text-gray-500 text-sm mb-4 flex items-center">
-          📅 {formatDate(event.event_date)}
+          <FaCalendar className="mr-2"/> {formatDate(event.event_date)}
         </p>
         <p className="text-gray-500 text-sm mb-4 line-clamp-3">
             {event.event_description || 'Tidak ada deskripsi singkat.'}
