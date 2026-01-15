@@ -21,7 +21,7 @@ export default function EventList() {
         const response = await apiService.getEvents();
         setEvents(response.data || []);
       } catch (e) {
-        setError('Gagal memuat data event.');
+        setError('Failed to load events');
         console.error(e);
       }
       finally {
@@ -76,7 +76,7 @@ export default function EventList() {
           <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <input 
             type="text"
-            placeholder="Cari nama event..." 
+            placeholder="Find your event..." 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full pl-10 pr-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
@@ -92,7 +92,7 @@ export default function EventList() {
             className="w-full pl-10 pr-8 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 appearance-none bg-white cursor-pointer"
           >
             {categories.map((cat, index) => (
-              <option key={index} value={cat}>{cat === "All" ? "Semua" : cat}</option>
+              <option key={index} value={cat}>{cat === "All" ? "All" : cat}</option>
             ))}
           </select>
         </div>

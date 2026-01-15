@@ -4,7 +4,7 @@ import { FaCalendar } from 'react-icons/fa';
 export default function EventCard({ event }) {
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('id-ID', options);
+    return new Date(dateString).toLocaleDateString('en-GB', options);
   };
 
   return (
@@ -25,7 +25,7 @@ export default function EventCard({ event }) {
         to={`/events/${event.id}`} 
         className="mt-4 block w-full text-center bg-sky-600 text-white font-medium py-2 px-4 rounded hover:bg-sky-500 transition-colors"
       >
-        Lihat Detail
+        See Details
       </Link>
     </div>
   );

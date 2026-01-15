@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { apiService } from "../services/api";
-import LoadingAnimation from "../components/LoadingAnimation";
 import { FaArrowLeft, FaCalendar, FaHashtag, FaCheck } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdPerson, MdOutlineWarning  } from "react-icons/md";
+import LoadingAnimation from "../components/LoadingAnimation";
+import ErrorCard from "../components/ErrorCard";
+
 export default function EventDetail() {
   const { id } = useParams();
   const [event, setEvent] = useState(null);
@@ -26,7 +28,7 @@ export default function EventDetail() {
           setEvent(response.data[0]);
         }
       } catch (e) {
-        setError('Gagal memuat detail event.');
+        setError('Failed to load event details');
         console.error(e);
       } finally { 
         setLoading(false);
@@ -66,7 +68,7 @@ export default function EventDetail() {
   return (
     <div className="container mx-auto px-4 py-10 max-w-4xl">
       <Link to="/" className="inline-flex items-center  gap-2 text-gray-900 hover:text-sky-600 mb-6">
-        <FaArrowLeft/> Kembali ke Daftar Event
+        <FaArrowLeft/> Back to Events
       </Link>
       
       <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
@@ -76,7 +78,7 @@ export default function EventDetail() {
           <div className="flex flex-col sm:flex-row sm:items-center gap-y-2 gap-x-6 text-sm opacity-90 mt-2"> 
             <span className="flex items-center gap-2">
               <FaCalendar className="text-sky-200" /> 
-              {new Date(event.event_date).toLocaleDateString('id-ID', { dateStyle: 'full' })}
+              {new Date(event.event_date).toLocaleDateString('en-GB', { dateStyle: 'full' })}
             </span>
 
             <span className="flex items-center gap-2">
@@ -100,7 +102,7 @@ export default function EventDetail() {
         {/* Content */}
         <div className="p-6">
           <div className="mb-4">
-            <h2 className="text-xl text-center md:text-left font-semibold text-gray-800 mb-1">Deskripsi</h2>
+            <h2 className="text-xl text-center md:text-left font-semibold text-gray-800 mb-1">Description</h2>
             <p className="text-center md:text-left text-gray-800 leading-relaxed whitespace-pre-line">
               {event.event_description}
             </p>
@@ -109,18 +111,18 @@ export default function EventDetail() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4 bg-gray-50 p-6 rounded-lg">
              <div className="flex flex-col items-center md:items-start gap-2">
                 <div>
-                  <p className="text-center md:text-left text-sm text-gray-500">Penyelenggara</p>
+                  <p className="text-center md:text-left text-sm text-gray-500">Event Organizer</p>
                   <p className="font-medium">{event.event_organizer}</p>
                 </div>
                 
                 <div>
-                  <p className="text-center md:text-left text-sm text-gray-500">Sponsor</p>
+                  <p className="text-center md:text-left text-sm text-gray-500">Event Sponsor</p>
                   <p className="font-medium">{event.event_sponsor}</p>
                 </div>
              </div>
              <div className="flex flex-col items-center md:items-start gap-2">
                 <div className="flex flex-col items-center md:items-start">
-                  <p className="text-center md:text-left text-sm text-gray-500">Total Peserta</p>
+                  <p className="text-center md:text-left text-sm text-gray-500">Total Attendances</p>
                   <span className="inline-flex items-center gap-2 font-medium text-center md:text-left text-sky-600">{event.event_attendees} <MdPerson className="mt-1"/></span>
                 </div>
 
@@ -141,14 +143,14 @@ export default function EventDetail() {
           <div className="border-t pt-6">
             {joinStatus === 'success' ? (
               <div className="bg-green-100 text-green-700 p-4 rounded-lg flex justify-between items-center">
-                <span className="inline-flex items-center gap-4"> <FaCheck/> Berhasil mendaftar sebagai volunteer!</span>
+                <span className="inline-flex items-center gap-4"> <FaCheck/>You have successfully joined {event.event_name}</span>
                 <button onClick={() => setJoinStatus(null)} className="text-sm underline">Reset</button>
               </div>
             ) : (
               <div className="flex flex-col gap-3">
                 {joinStatus === 'error' && (
                   <div className="bg-red-100 text-red-700 p-3 rounded text-sm">
-                    <span className="inline-flex items-center gap-4 md:gap-2"> <MdOutlineWarning/>Gagal mendaftar. Silakan coba lagi. </span>
+                    <span className="inline-flex items-center gap-4 md:gap-2"> <MdOutlineWarning/>Failed to join, Please try again! </span>
                   </div>
                 )}
                 
@@ -161,7 +163,7 @@ export default function EventDetail() {
                       : 'bg-sky-600 hover:bg-sky-500 text-white shadow-md hover:shadow-lg'
                   }`}
                 >
-                  {isJoining ? 'Memproses...' : 'Join Event Sekarang'}
+                  {isJoining ? 'Loading...' : 'Join Now!'}
                 </button>
               </div>
             )}
