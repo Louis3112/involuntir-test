@@ -9,7 +9,7 @@ const apiClient = axios.create({
 
 export const apiService = {
   getEvents: async () => {
-    const response = await apiClient.get('/api/events');
+    const response = await apiClient.get('/api/events/');
     return response.data;
   },
 
