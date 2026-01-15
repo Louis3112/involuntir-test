@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { apiService } from '../services/api';
 import { MdEventBusy } from "react-icons/md";
 import { FaSearch, FaFilter } from 'react-icons/fa';
@@ -11,16 +11,15 @@ export default function EventList() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
   useEffect(() => {
     const fetchEvents = async () => {
       try{
         setLoading(true);
         const response = await apiService.getEvents();
-        if (Array.isArray(response)) {
-          setEvents(response);
-        } else if (response && Array.isArray(response.data)) {
-          setEvents(response.data);
-        } 
+        setEvents(response.data || []);
       } catch (e) {
         setError('Gagal memuat data event.');
         console.error(e);
@@ -33,6 +32,17 @@ export default function EventList() {
     fetchEvents();
   }, []);
 
+  const categories = useMemo(() => {
+    const uniqueCats = [...new Set(events.map(e => e.event_category).filter(Boolean))];
+    return ["All", ...uniqueCats];
+  }, [events]);
+
+  const filteredEvents = events.filter(event => {
+    const matchesSearch = event.event_name?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === "All" || event.event_category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+  
   if (loading) {
     return (
       <LoadingAnimation/>
@@ -56,22 +66,48 @@ export default function EventList() {
       
       <div className="border-b border-gray-300 mb-8 pb-4">
         <h3 className=" text-center text-gray-500 mt-2 text-lg">
-        Temukan <span className="font-bold text-sky-600">kesempatan</span> berkontribusi untuk sekitarmu.
+        Find a way <span className="font-bold text-sky-600">to contribute</span> for your surroundings.
         </h3>
       </div>
       
+      <div className=" mb-8 flex flex-col md:flex-row gap-4 justify-between items-center sticky top-4 z-10 backdrop-blur-md bg-opacity-95">
+        {/* Search */}
+        <div className="relative w-full md:w-1/2">
+          <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <input 
+            type="text"
+            placeholder="Cari nama event..." 
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all"
+          />
+        </div>
+
+        {/* Category Filter */}
+        <div className="relative w-full md:w-1/4">
+          <FaFilter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <select 
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="w-full pl-10 pr-8 py-2 border border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 appearance-none bg-white cursor-pointer"
+          >
+            {categories.map((cat, index) => (
+              <option key={index} value={cat}>{cat === "All" ? "Semua" : cat}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
       {events.length === 0 ? (
         <div className="flex flex-col items-center text-center py-20 bg-gray-50 rounded-2xl border-gray-200">
           <MdEventBusy className="text-5xl text-gray-500"/>
-          <p className="text-gray-500 text-lg font-medium">Belum ada event tersedia saat ini.</p>
-          <p className="text-gray-400 text-sm">Silakan cek kembali nanti.</p>
+          <p className="text-gray-500 text-lg font-medium">There are no available events at this time.</p>
+          <p className="text-gray-400 text-sm">Please check back later</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {events.map((event) => (
-            <div key={event.id} className="p-2">
-              <EventCard event={event} />
-            </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {filteredEvents.map((event) => (
+            <EventCard key={event.id} event={event} />
           ))}
         </div>
       )}

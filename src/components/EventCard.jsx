@@ -23,7 +23,7 @@ export default function EventCard({ event }) {
       
       <Link 
         to={`/events/${event.id}`} 
-        className="mt-4 block w-full text-center bg-blue-600 text-white font-medium py-2 px-4 rounded hover:bg-blue-700 transition-colors"
+        className="mt-4 block w-full text-center bg-sky-600 text-white font-medium py-2 px-4 rounded hover:bg-sky-500 transition-colors"
       >
         Lihat Detail
       </Link>

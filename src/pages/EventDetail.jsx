@@ -13,7 +13,7 @@ export default function EventDetail() {
 
   const [isJoining, setIsJoining] = useState(false);
   const [joinStatus, setJoinStatus] = useState(null);
-
+  
   useEffect(() => {
     const fetchEventDetail = async () => {
       try {
