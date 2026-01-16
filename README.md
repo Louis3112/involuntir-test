@@ -111,7 +111,7 @@ Yang dimana, seharusnya *API* mengembalikan object dengan data berupa *object* s
         },
 }
 ```
-Dari tantangan tersebut, saya beradaptasi dan harus menyesuaikan *output coding* di EventList.jsx dan EventDetail.jsx untuk mendeteksi struktur data agar aplikasi dapat membaca data yang diberikan.
+Dari tantangan tersebut, saya beradaptasi dan harus menyesuaikan *output coding* di `EventList.jsx` dan `EventDetail.jsx` untuk mendeteksi struktur data agar aplikasi dapat membaca data yang diberikan.
 
 Selain itu, endpoint `POST /api/login` dan `POST /api/logout` mengembalikan 404 Not Found. Solusinya, saya berinisiatif membuat *mock service* di api.js yang mensimulasikan proses login agar fitur autentikasi dan *Protected Route* tetap bisa didemonstrasikan.
 <br/><br/>
@@ -121,13 +121,14 @@ Saya akan melakukan beberapa hal berikut :
 1. Migrasi ke TypeScript: Untuk meningkatkan keamanan tipe data dan mencegah *bug* saat runtime, terutama karena struktur API yang dinamis.
 2. Menambahkan *dark mode theme* : Untuk meningkatkan *UX* sehingga lebih nyaman dalam mengakses aplikasi
 3. Menambahkan *database* : Untuk menyimpan data *user*, seperti *event* yang diikuti, *cache* , dan manajemen *auto-refetch* agar tidak perlu *request* setiap saat.
-4. Membuat *wireframe* dan *UI/UX design: Untuk menyesuaikan dengan *personal branding* dari involuntir.
+4. Membuat *wireframe* dan *UI/UX design*: Untuk menyesuaikan dengan *personal branding* dari involuntir.
 <br/>
 
 ### 3. Asumsi UX apa yang kamu ambil?
 Asumsi *UX* yang saaya ambil adalah : 
 1. Wajib *Login*: Saya berasumsi platform involuntir bersifat eksklusif bagi anggota terdaftar, terutama apabila anggota sudah mendaftar suatu *event* yang dia inginkan. Oleh karena itu, *page* `EventList.js` dan `EventDetail.js` perlu di *protected* terlebih dahulu dengan cara melakukan *login*.
 2. *Feedback* Visual: Saya berasumsi pengguna membutuhkan *feedback* apakah *website* sedang *loading* atau tidak responsif. Oleh karena itu, saya membuat *loading animation* dan *error card* agar pengguna tahu bahwa *website* responsif.
-3. Navigasi: Menambahkan tombol "Kembali" di *page* `EventDetail.js` dan indikator status *login/logout* di navbar untuk kejelasan status pengguna.
+3. Navigasi: Menambahkan tombol *"Back to events"* di *page* `EventDetail.js` dan indikator status *login/logout* di navbar untuk kejelasan status pengguna.
 
-Cornelius Louis Nathan
+---
+## Cornelius Louis Nathan
