@@ -130,3 +130,4 @@ Asumsi *UX* yang saaya ambil adalah :
 2. *Feedback* Visual: Saya berasumsi pengguna membutuhkan *feedback* apakah *website* sedang *loading* atau tidak responsif. Oleh karena itu, saya membuat *loading animation* dan *error card* agar pengguna tahu bahwa *website* responsif.
 3. Navigasi: Menambahkan tombol "Kembali" di *page* `EventDetail.js` dan indikator status *login/logout* di navbar untuk kejelasan status pengguna.
 
+Cornelius Louis Nathan
