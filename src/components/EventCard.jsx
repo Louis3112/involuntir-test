@@ -9,6 +9,7 @@ export default function EventCard({ event }) {
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 p-5 flex flex-col justify-between h-full">
+      {/* Event Info */}
       <div>
         <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
           {event.event_name}
@@ -21,6 +22,7 @@ export default function EventCard({ event }) {
         </p>
       </div>
       
+      {/* See Details Link */}
       <Link 
         to={`/events/${event.id}`} 
         className="mt-4 block w-full text-center bg-sky-600 text-white font-medium py-2 px-4 rounded hover:bg-sky-500 transition-colors"

@@ -2,6 +2,7 @@ import { CiWarning } from "react-icons/ci";
 
 export default function ErrorCard({ error }) {
   return (
+    // Error Card UI
     <div className="min-h-screen flex justify-center items-center">
       <div className="bg-red-50 text-red-600 p-6 rounded-xl border border-red-100 max-w-md flex flex-col items-center text-center">
         <CiWarning className="text-5xl mb-2"/>

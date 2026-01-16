@@ -8,15 +8,20 @@ import LoadingAnimation from "../components/LoadingAnimation";
 import ErrorCard from "../components/ErrorCard";
 
 export default function EventDetail() {
+  // Get event ID from URL params
   const { id } = useParams();
+
+  // State for event details, loading, error
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // State for join event
   const [isJoining, setIsJoining] = useState(false);
   const [joinStatus, setJoinStatus] = useState(null);
   
   useEffect(() => {
+    // Fetch event details from API
     const fetchEventDetail = async () => {
       try {
         setLoading(true);
@@ -38,6 +43,7 @@ export default function EventDetail() {
     fetchEventDetail();
   }, [id]);
   
+  // Handle join event action
   const handleJoinEvent = () => {
     setIsJoining(true);
     setJoinStatus(null);
@@ -54,11 +60,13 @@ export default function EventDetail() {
     }, 1500);
   };
 
-  if (loading) {
+  // Loading State
+  if(loading) {
     return (
       <LoadingAnimation/>
     );
   }
+  // Error State
   if(error) {
     return (
       <ErrorCard error={error} />
@@ -108,6 +116,7 @@ export default function EventDetail() {
             </p>
           </div>
 
+          {/* Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4 bg-gray-50 p-6 rounded-lg">
              <div className="flex flex-col items-center md:items-start gap-2">
                 <div>
@@ -140,6 +149,7 @@ export default function EventDetail() {
              </div>
           </div>
 
+          {/* Join Event Button */}
           <div className="border-t pt-6">
             {joinStatus === 'success' ? (
               <div className="bg-green-100 text-green-700 p-4 rounded-lg flex justify-between items-center">
