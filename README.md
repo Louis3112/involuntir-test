@@ -1,16 +1,68 @@
-# React + Vite
+# :bangbang: Involuntir - Frontend Intern Assessment :bangbang:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🛠️ Tech Stack
+Project ini dibangun menggunakan teknologi modern sesuai instruksi:
 
-Currently, two official plugins are available:
+* **Core:** React.js (Vite)
+* **Styling:** Tailwind CSS
+* **Routing:** React Router DOM
+* **HTTP Client:** Axios
+* **Icons:** React Icons
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Cara Menjalankan Project
+1.  **Clone Repository:** :
+    ```bash
+    git clone https://github.com/Louis3112/lumbaUmbah
+    ```
+2.  **Install Dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Jalankan Development Server:**
+    ```bash
+    npm run dev
+    ```
+4.  Buka browser dan akses `http://localhost:5173`.
 
-## React Compiler
+> **Catatan Login:** Karena endpoint `POST /api/login` dan `POST /api/logout` merespon 404. Sehingga, gunakan email `test@gmail.com` dan password `123` (atau kredensial apapun) untuk masuk.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📂 Struktur Folder
+Struktur project disusun secara modular untuk memisahkan logika aplikasi dan *UI Project*:
+```text
+src/
+├── components/       # Reusable UI components
+│   ├── ErrorCard.jsx          # Tampilan Error ketika terjadi kesalahan
+│   ├── EventCard.jsx          # Kartu event untuk list view
+│   ├── LoadingAnimation.jsx   # Animasi Loading ketika digunakan di state Loading
+│   ├── ProtectedRoute.jsx     # HOC untuk proteksi halaman
+├── pages/            # Halaman aplikasi
+│   ├── EventList.jsx      # Halaman Home (List + Search + Filter)
+│   ├── EventDetail.jsx    # Halaman Detail Event
+│   └── Login.jsx          # Halaman Login
+├── services/         # Integrasi API & Logic
+│   └── api.js             # Konfigurasi Axios & Fetch functions
+├── App.jsx           # Routing configuration
+└── main.jsx          # Entry point
 
-## Expanding the ESLint configuration
+✨ Fitur Utama
+Event List & Detail: Mengambil data real-time dari API publik yang disediakan.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Responsive Design: Layout grid adaptif (Mobile 1 kolom, Tablet 2 kolom, Desktop 3 kolom).
+
+Search & Filter: Fitur pencarian client-side berdasarkan nama event dan filter kategori.
+
+UX Enhancements:
+
+Skeleton Loading saat mengambil data.
+
+Error Handling yang informatif jika API gagal.
+
+Empty State jika data pencarian tidak ditemukan.
+
+Bonus Features (Auth Flow):
+
+Halaman Login dengan validasi.
+
+Protected Routes: User tidak bisa akses halaman event tanpa login.
+
+Simulasi penyimpanan token di localStorage.
